@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Exec=mpvradio
+Name=MPV Radio
+GenericName=Internet radio player
+Comment=Simple frontend for mpv radio streams
+Version=1.0
+Categories=Network;Qt;KDE
