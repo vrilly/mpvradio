@@ -5,22 +5,12 @@
 #include <QTimer>
 #include <mpv/client.h>
 #include "channel_list_manager.h"
+#include "mpvradio_dbus.h"
+#include "mpv_control.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class mpvradio; }
 QT_END_NAMESPACE
-
-class mpv_control
-{
-public:
-    mpv_control();
-    void play_url(const char *url);
-    void update_track();
-    void end();
-    mpv_handle *handle;
-    mpv_handle *client_handle;
-    char *current_track;
-};
 
 class mpvradio : public QMainWindow
 {
@@ -28,6 +18,7 @@ class mpvradio : public QMainWindow
 
 public:
     mpvradio(QWidget *parent = nullptr);
+    dbus_connector *dbus;
     ~mpvradio();
     char stream_url[256];
     channel_list_manager *channellist;

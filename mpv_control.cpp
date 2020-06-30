@@ -2,6 +2,7 @@
 
 mpv_control::mpv_control()
 {
+    paused = 1;
     setlocale(LC_NUMERIC, "C");
     this->handle = mpv_create();
     if (!this->handle)
@@ -29,6 +30,23 @@ void mpv_control::update_track()
     this->current_track = mpv_get_property_string(this->handle, "media-title");
 }
 
+void mpv_control::toggle_pause()
+{
+    mpv_get_property(handle, "pause", MPV_FORMAT_FLAG, &paused);
+    if (paused)
+    {
+        paused = 0;
+        mpv_set_property_string(handle, "pause", "no");
+    }
+    else
+    {
+        paused = 1;
+        mpv_set_property_string(handle, "pause", "yes");
+    }
+}
+
 void mpv_control::end()
 {
+    mpv_free(this->current_track);
+    mpv_terminate_destroy(this->handle);
 }

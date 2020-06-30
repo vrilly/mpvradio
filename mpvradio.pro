@@ -1,4 +1,4 @@
-QT       += core gui widgets
+QT       += core gui widgets dbus
 
 CONFIG += c++11
 
@@ -10,12 +10,15 @@ SOURCES += \
     mpv_control.cpp \
     mpvradio.cpp \
     mpvradio_add.cpp \
+    mpvradio_dbus.cpp \
     mpvradio_open.cpp
 
 HEADERS += \
     channel_list_manager.h \
+    mpv_control.h \
     mpvradio.h \
     mpvradio_add.h \
+    mpvradio_dbus.h \
     mpvradio_open.h
 
 FORMS += \

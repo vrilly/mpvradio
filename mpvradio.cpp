@@ -8,6 +8,7 @@ mpvradio::mpvradio(QWidget *parent)
     , ui(new Ui::mpvradio)
 {
     this->channellist = new channel_list_manager();
+    this->dbus = new dbus_connector(&this->mpv);
     ui->setupUi(this);
     ui->channelView->setModel(this->channellist);
     this->timer = new QTimer(this);
@@ -17,6 +18,9 @@ mpvradio::mpvradio(QWidget *parent)
 
 mpvradio::~mpvradio()
 {
+    this->mpv.end();
+    delete this->channellist;
+    delete this->dbus;
     delete ui;
 }
 
@@ -32,6 +36,7 @@ void mpvradio::on_actionOpen_URL_triggered()
 
     if (stream_dialog.exec())
         this->mpv.play_url(stream_dialog.url.c_str());
+    this->dbus->update();
 }
 
 void mpvradio::update_label()
@@ -39,22 +44,6 @@ void mpvradio::update_label()
     this->mpv.update_track();
     ui->txt_title->setText(this->mpv.current_track);
     setWindowTitle(this->mpv.current_track);
-}
-
-void mpvradio::on_pause_btn_clicked()
-{
-    static int paused = 0;
-
-    if (paused)
-    {
-        paused = 0;
-        mpv_set_property_string(this->mpv.handle, "pause", "no");
-    }
-    else
-    {
-        paused = 1;
-        mpv_set_property_string(this->mpv.handle, "pause", "yes");
-    }
 }
 
 void mpvradio::on_actionAdd_triggered()
@@ -72,6 +61,7 @@ void mpvradio::on_channelView_doubleClicked(const QModelIndex &index)
 {
     list_item item = this->channellist->channels.at(index.row());
     this->mpv.play_url(item.channel_url.toStdString().c_str());
+    this->dbus->update();
 }
 
 void mpvradio::on_actionDelete_triggered()
@@ -86,4 +76,10 @@ void mpvradio::on_channelView_clicked(const QModelIndex &index)
 {
     (void)index;
     ui->actionDelete->setEnabled(true);
+}
+
+void mpvradio::on_pause_btn_clicked()
+{
+    this->mpv.toggle_pause();
+    this->dbus->update();
 }
