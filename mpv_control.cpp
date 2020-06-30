@@ -24,9 +24,14 @@ void mpv_control::play_url(const char *url)
 
 void mpv_control::update_track()
 {
+    char mpv_cmd[64];
+    mpv_get_property(this->handle, "track-list/count",
+                     MPV_FORMAT_INT64, &this->current_track_num);
+    if (!this->current_track_num)
+        return ;
     mpv_free(this->current_track);
-    this->current_track =
-            mpv_get_property_string(this->handle, "track-list/0/title");
+    sprintf(mpv_cmd, "track-list/%d/title", this->current_track_num - 1);
+    this->current_track = mpv_get_property_string(this->handle, mpv_cmd);
 }
 
 void mpv_control::end()
