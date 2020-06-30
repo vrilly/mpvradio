@@ -7,18 +7,12 @@
     <x>0</x>
     <y>0</y>
     <width>397</width>
-    <height>99</height>
+    <height>285</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>397</width>
-    <height>99</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>16777215</width>
     <height>99</height>
    </size>
   </property>
@@ -36,10 +30,13 @@
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
       <item>
        <widget class="QLabel" name="lbl_title">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -51,12 +48,21 @@
       </item>
       <item>
        <widget class="QLabel" name="txt_title">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>TITLE</string>
         </property>
        </widget>
       </item>
      </layout>
+    </item>
+    <item>
+     <widget class="QListView" name="channelView"/>
     </item>
    </layout>
   </widget>
@@ -71,21 +77,39 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="actionOpen_URL"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuChannel_list">
+    <property name="title">
+     <string>Channel &amp;list</string>
+    </property>
+    <addaction name="actionAdd"/>
+    <addaction name="actionDelete"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuChannel_list"/>
   </widget>
   <action name="actionOpen_URL">
    <property name="text">
-    <string>Open URL</string>
+    <string>&amp;Open URL</string>
    </property>
   </action>
   <action name="actionExit">
    <property name="text">
-    <string>Exit</string>
+    <string>E&amp;xit</string>
+   </property>
+  </action>
+  <action name="actionAdd">
+   <property name="text">
+    <string>&amp;Add</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="text">
+    <string>&amp;Delete</string>
    </property>
   </action>
  </widget>

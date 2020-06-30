@@ -1,12 +1,15 @@
 #include "mpvradio.h"
 #include "ui_mpvradio.h"
 #include "mpvradio_open.h"
+#include "mpvradio_add.h"
 
 mpvradio::mpvradio(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::mpvradio)
 {
+    this->channellist = new channel_list_manager();
     ui->setupUi(this);
+    ui->channelView->setModel(this->channellist);
     this->timer = new QTimer(this);
     connect(this->timer, &QTimer::timeout, this, &mpvradio::update_label);
     this->timer->start(1000);
@@ -52,4 +55,22 @@ void mpvradio::on_pause_btn_clicked()
         paused = 1;
         mpv_set_property_string(this->mpv.handle, "pause", "yes");
     }
+}
+
+void mpvradio::on_actionAdd_triggered()
+{
+    mpvradio_add add_dialog;
+
+    if (add_dialog.exec())
+    {
+        this->channellist->channels.append(add_dialog.result);
+        this->channellist->write_config();
+        printf("brr");
+    }
+}
+
+void mpvradio::on_channelView_doubleClicked(const QModelIndex &index)
+{
+    list_item item = this->channellist->channels.at(index.row());
+    this->mpv.play_url(item.channel_url.toStdString().c_str());
 }

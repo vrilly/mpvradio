@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <mpv/client.h>
+#include "channel_list_manager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class mpvradio; }
@@ -29,6 +30,7 @@ public:
     mpvradio(QWidget *parent = nullptr);
     ~mpvradio();
     char stream_url[256];
+    channel_list_manager *channellist;
 
 private slots:
     void on_actionExit_triggered();
@@ -38,6 +40,10 @@ private slots:
     void update_label();
 
     void on_pause_btn_clicked();
+
+    void on_actionAdd_triggered();
+
+    void on_channelView_doubleClicked(const QModelIndex &index);
 
 private:
     Ui::mpvradio *ui;
