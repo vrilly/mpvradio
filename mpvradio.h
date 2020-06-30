@@ -45,6 +45,10 @@ private slots:
 
     void on_channelView_doubleClicked(const QModelIndex &index);
 
+    void on_actionDelete_triggered();
+
+    void on_channelView_clicked(const QModelIndex &index);
+
 private:
     Ui::mpvradio *ui;
     mpv_control mpv;

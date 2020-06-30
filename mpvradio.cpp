@@ -65,7 +65,6 @@ void mpvradio::on_actionAdd_triggered()
     {
         this->channellist->channels.append(add_dialog.result);
         this->channellist->write_config();
-        printf("brr");
     }
 }
 
@@ -73,4 +72,18 @@ void mpvradio::on_channelView_doubleClicked(const QModelIndex &index)
 {
     list_item item = this->channellist->channels.at(index.row());
     this->mpv.play_url(item.channel_url.toStdString().c_str());
+}
+
+void mpvradio::on_actionDelete_triggered()
+{
+    int row = ui->channelView->selectionModel()->currentIndex().row();
+    this->channellist->channels.removeAt(row);
+    this->channellist->write_config();
+    ui->actionDelete->setEnabled(false);
+}
+
+void mpvradio::on_channelView_clicked(const QModelIndex &index)
+{
+    (void)index;
+    ui->actionDelete->setEnabled(true);
 }
