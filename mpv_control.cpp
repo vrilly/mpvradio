@@ -20,6 +20,7 @@ void mpv_control::play_url(const char *url)
 
     sprintf(cmd, "loadfile %s", url);
     mpv_command_string(this->handle, cmd);
+    mpv_set_property_string(this->handle, "vid", "no");
 }
 
 void mpv_control::update_track()
@@ -30,5 +31,4 @@ void mpv_control::update_track()
 
 void mpv_control::end()
 {
-
 }
