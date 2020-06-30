@@ -20,7 +20,6 @@ public:
     mpv_handle *handle;
     mpv_handle *client_handle;
     char *current_track;
-    int current_track_num;
 };
 
 class mpvradio : public QMainWindow
